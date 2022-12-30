@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.demo.mapper.BoardMapper">
+
+    <insert id="saveBoard"
+       parameterType="com.ezen.demo.vo.Board">
+       <!-- Board.num 에 시퀀스 값을 보관해서 사용할 필요가 있다면 아래처럼...
+      <selectKey keyProperty="num" resultType="integer" order="BEFORE">
+          SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
+       -->
+      INSERT INTO board2(num, title, contents, author)
+      VALUES(BOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{author})
+
+    </insert>
+    
+     <update id="saveAttach" parameterType="list">
+       INSERT INTO attach (num, bnum, fname, fsize)
+       SELECT ATTACH_SEQ.NEXTVAL AS num, t.* FROM
+       (
+           <foreach collection="list" item="item" index="index" separator="union all">
+                SELECT (SELECT MAX(num) FROM board2) AS bnum, #{item.fname}, #{item.fsize} FROM DUAL
+           </foreach>
+       ) t
+   </update>   
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <mapper namespace="com.ezen.demo.mapper.EmpMapper">
+          <select id="list" 
+       resultType="com.ezen.demo.vo.Emp">
+        SELECT * FROM emp2
+    	</select>
+    	
+    	
+     <select id = "listByDeptno"
+        parameterType="Integer"
+        resultType="com.ezen.demo.vo.Emp">
+        
+         SELECT * FROM emp2 WHERE deptno = #{deptno}
+        
+        </select>
+        
+         <delete id = "deleteByEmpno"
+         parameterType="com.ezen.demo.vo.Emp">
+         
+         DELETE FROM emp2 WHERE empno= #{empno}
+         
+         </delete>
+         
+         <update id = "updateByDeptno"
+         parameterType = "map">
+         
+         <![CDATA[
+         UPDATE emp2 SET sal = #{sal} * 1.05 
+         WHERE deptno = #{deptno} AND sal < #{sal}
+         ]]>
+         </update>
+</mapper>
+
+<!--
+        <select id="list" 
+       resultType="com.ezen.spring.web.vo.Emp">
+        SELECT * FROM emp2
+    </select>
+    
+    
+        
+       <select 
+        id = "listByDeptno"
+        parameterType="Integer"
+        resultType="com.ezen.spring.web.vo.Emp">
+        
+         SELECT * FROM emp2 WHERE deptno=#(deptno)
+        
+        </select>
+         
+         
+         List<Emp> listByDeptno(int deptno);
+         
+         
+         <delete
+         id = "deleteByEmpno"
+         parameterType="com.ezen.spring.web.vo.Emp"
+         >
+         
+         DELETE FROM emp2 WHERE empno= #{empno}
+         
+         </delete>
+         
+         -->
